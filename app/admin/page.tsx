@@ -38,7 +38,7 @@ export default function CoffeeMenu() {
       <main className="flex-grow p-6">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <h1 className="text-5xl font-extrabold text-center mb-4 text-black">
+          <h1 className="text-5xl font-extrabold text-center mb-4 text-brown-800">
             Welcome to Our Coffee Shop ☕
           </h1>
           <p className="text-center text-gray-600 mb-10 text-lg">
@@ -59,13 +59,13 @@ export default function CoffeeMenu() {
                   className="rounded-lg w-full h-40 object-cover mb-4"
                 />
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-black">{item.name}</h2>
+                  <h2 className="text-2xl font-bold text-brown-800">{item.name}</h2>
                   <span className="text-lg font-semibold text-green-600">
                     {item.price}
                   </span>
                 </div>
                 <p className="text-gray-600 mt-2">{item.description}</p>
-                <button className="mt-6 w-full px-4 py-2 bg-black text-white rounded hover:bg-black transition">
+                <button className="mt-6 w-full px-4 py-2 bg-brown-800 text-white rounded hover:bg-brown-800 transition">
                   Order Now
                 </button>
               </div>
