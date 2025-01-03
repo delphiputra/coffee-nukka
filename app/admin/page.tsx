@@ -12,6 +12,24 @@ export default function CoffeeMenu() {
       price: "Rp 20000",
       image: "/images/cappuccino.jpg", // Path gambar untuk Cappuccino
     },
+    {
+      name: "Latte",
+      description: "Creamy milk coffee.",
+      price: "Rp 20000",
+      image: "/images/latte.jpg",
+    },
+    {
+      name: "Americano",
+      description: "Espresso with hot water.",
+      price: "Rp 20000",
+      image: "/images/americano.jpg",
+    },
+    {
+      name: "Mocha",
+      description: "Coffee with chocolate and milk.",
+      price: "Rp 20000",
+      image: "/images/mocha.jpg",
+    },
   ];
 
   return (
