@@ -8,5 +8,3 @@ export default function Home() {
   
   return null; // Tidak menampilkan konten di halaman root
 }
-
-headers
