@@ -38,6 +38,21 @@ export default function MakananPage() {
               <th className="border px-4 py-2 text-center">Aksi</th>
             </tr>
           </thead>
+          <tbody>
+            <tr className="hover:bg-gray-100">
+              <td className="border px-4 py-2 text-gray-800">1</td>
+              <td className="border px-4 py-2 text-gray-800">Contoh Makanan</td>
+              <td className="border px-4 py-2 text-gray-800">10000</td>
+              <td className="border px-4 py-2 text-center">
+                <button className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition mr-2">
+                  Edit
+                </button>
+                <button className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <div className="text-center text-gray-500 mt-4">
           Tidak ada data makanan.
