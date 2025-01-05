@@ -1,6 +1,6 @@
 "use client";
 
-// Tahap 1: Dasar tampilan daftar minuman
+// Tahap 2: Menambahkan form input untuk menambah minuman (interaksi dasar)
 
 type Minuman = {
   id: string;
@@ -20,6 +20,30 @@ export default function MinumanPage() {
       <h1 className="text-4xl font-extrabold text-gray-700 mb-6 text-center">
         🍹 Daftar Minuman
       </h1>
+
+      {/* Form Input Minuman */}
+      <div className="mb-8 bg-white shadow rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-gray-600 mb-4 text-center">➕ Tambah Minuman</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <input
+            type="text"
+            placeholder="Nama Minuman"
+            className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <input
+            type="number"
+            placeholder="Harga"
+            className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <button
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 transition sm:col-span-2 lg:col-span-1"
+          >
+            Tambah
+          </button>
+        </div>
+      </div>
+
+      {/* Tabel Daftar Minuman */}
       <div className="overflow-x-auto bg-white shadow rounded-lg p-6">
         <table className="table-auto w-full border-collapse">
           <thead>
