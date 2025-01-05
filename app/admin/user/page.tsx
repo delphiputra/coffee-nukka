@@ -34,6 +34,42 @@ export default function UserPage() {
             Tambah
           </button>
         </div>
+
+        {/* Tabel Daftar Pengguna */}
+        <div className="overflow-x-auto bg-white shadow rounded-lg p-6">
+          <table className="table-auto w-full border-collapse">
+            <thead>
+              <tr className="bg-blue-100 text-blue-700">
+                <th className="border px-4 py-2 text-left">ID</th>
+                <th className="border px-4 py-2 text-left">Nama</th>
+                <th className="border px-4 py-2 text-left">Email</th>
+                <th className="border px-4 py-2 text-left">Role</th>
+                <th className="border px-4 py-2 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="hover:bg-gray-100">
+                <td className="border px-4 py-2 text-gray-800">1</td>
+                <td className="border px-4 py-2 text-gray-800">Contoh Nama</td>
+                <td className="border px-4 py-2 text-gray-800">
+                  email@contoh.com
+                </td>
+                <td className="border px-4 py-2 text-gray-800">Admin</td>
+                <td className="border px-4 py-2 text-center">
+                  <button className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition mr-2">
+                    Edit
+                  </button>
+                  <button className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition">
+                    Hapus
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="text-center text-gray-500 mt-4">
+            Tidak ada data pengguna.
+          </div>
+        </div>
       </div>
     </div>
   );
