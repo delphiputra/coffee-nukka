@@ -73,7 +73,19 @@ export default function CoffeeMenu() {
               Welcome to Our Coffee Shop ☕
             </h1>
 
-           
+            {/* Keranjang Icon di kanan atas */}
+            <div className="relative">
+              <Link href="/pembeli/order">
+                <button className="p-2 bg-brown-800 text-white rounded-full hover:bg-brown-800">
+                  <ShoppingCartIcon className="w-6 h-6" />
+                  {cart > 0 && (
+                    <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                      {cart}
+                    </span>
+                  )}
+                </button>
+              </Link>
+            </div>
           </div>
 
           <p className="text-center text-gray-600 mb-10 text-lg">
