@@ -64,16 +64,6 @@ export default function LoginPage() {
         <button className="w-full bg-[#5C4033] text-white font-bold py-3 rounded-lg hover:bg-[#4A3228] transition-all duration-300 shadow-md">
           Login
         </button>
-
-        <p className="text-black mt-6 text-center text-brown-600 text-sm">
-          Don't have an account?{" "}
-          <a
-            href="/register"
-            className="text-brown-700 font-medium hover:underline"
-          >
-            Sign up here
-          </a>
-        </p>
       </div>
     </div>
   );
