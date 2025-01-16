@@ -11,7 +11,27 @@ type User = {
 };
 
 export default function UserPage() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [newName, setNewName] = useState<string>("");
+  const [newEmail, setNewEmail] = useState<string>("");
+  const [newRole, setNewRole] = useState<"Admin" | "Pembeli">("Pembeli");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
+  // Fetch data pengguna
+  async function fetchUsers() {
+    try {
+      const res = await fetch("/api/user");
+      if (!res.ok) {
+        const errorResponse = await res.json().catch(() => null);
+        throw new Error(errorResponse?.error || `HTTP error! status: ${res.status}`);
+      }
+      const data: User[] = await res.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Gagal mengambil data pengguna:", (error as Error).message);
+    }
+  }
 
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 shadow-lg rounded-lg">
