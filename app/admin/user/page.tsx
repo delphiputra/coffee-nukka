@@ -65,6 +65,40 @@ export default function UserPage() {
     }
   }
 
+  // Edit pengguna
+  async function editUser() {
+    if (editingId && newName && newEmail) {
+      try {
+        const res = await fetch("/api/user", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: editingId,
+            name: newName,
+            email: newEmail,
+            role: newRole,
+            password: newPassword || undefined,
+          }),
+        });
+
+        if (res.ok) {
+          fetchUsers();
+          setEditingId(null);
+          setNewName("");
+          setNewEmail("");
+          setNewRole("Pembeli");
+          setNewPassword("");
+        } else {
+          console.error("Gagal mengedit pengguna");
+        }
+      } catch (error) {
+        console.error("Terjadi kesalahan saat mengedit pengguna:", (error as Error).message);
+      }
+    } else {
+      console.error("Nama dan email harus diisi!");
+    }
+  }
+
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 shadow-lg rounded-lg">
       <h1 className="text-4xl font-extrabold text-gray-700 mb-6 text-center">
