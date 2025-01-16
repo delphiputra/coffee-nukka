@@ -27,5 +27,16 @@ export async function POST(req: Request): Promise<Response> {
         { status: 401 }
       );
     }
+
+    // Pastikan data role ada di respons
+    const { password: _, ...userData } = user;
+
+    return new Response(JSON.stringify(userData), { status: 200 });
+  } catch (error: any) {
+    console.error("Error in login:", error.message);
+    return new Response(
+      JSON.stringify({ error: "Terjadi kesalahan pada server" }),
+      { status: 500 }
+    );
   }
 }
