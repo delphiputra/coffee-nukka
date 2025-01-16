@@ -62,6 +62,36 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
+// Endpoint PUT untuk mengedit pengguna
+export async function PUT(req: Request): Promise<Response> {
+    try {
+      const { id, name, email, role, password } = await req.json();
+  
+      // Validasi input
+      if (!id || !name || !email || !role || !password) {
+        return new Response(
+          JSON.stringify({ error: "All fields are required" }),
+          { status: 400 }
+        );
+      }
+  
+      // Hash password sebelum menyimpan ke database
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const updatedUser = await prisma.user.update({
+        where: { id },
+        data: { name, email, role, password: hashedPassword },
+      });
+  
+      return new Response(JSON.stringify(updatedUser), { status: 200 });
+    } catch (error: any) {
+      console.error("Error updating user:", error.message);
+      return new Response(
+        JSON.stringify({ error: "Failed to update user" }),
+        { status: 500 }
+      );
+    }
+  }
 
 
 
