@@ -99,6 +99,39 @@ export default function UserPage() {
     }
   }
 
+  // Hapus pengguna
+  async function deleteUser(id: string) {
+    try {
+      const res = await fetch("/api/user", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+
+      if (res.ok) {
+        fetchUsers();
+      } else {
+        console.error("Gagal menghapus pengguna");
+      }
+    } catch (error) {
+      console.error("Terjadi kesalahan saat menghapus pengguna:", (error as Error).message);
+    }
+  }
+
+  // Isi data untuk edit
+  function handleEdit(user: User) {
+    setEditingId(user.id);
+    setNewName(user.name);
+    setNewEmail(user.email);
+    setNewRole(user.role);
+    setNewPassword(""); // Reset password saat edit
+  }
+
+  // Ambil data pengguna saat komponen dimuat
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 shadow-lg rounded-lg">
       <h1 className="text-4xl font-extrabold text-gray-700 mb-6 text-center">
