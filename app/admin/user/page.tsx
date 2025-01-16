@@ -33,6 +33,38 @@ export default function UserPage() {
     }
   }
 
+  // Tambah pengguna baru
+  async function addUser() {
+    if (newName && newEmail && newPassword) {
+      try {
+        const res = await fetch("/api/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: newName,
+            email: newEmail,
+            role: newRole,
+            password: newPassword,
+          }),
+        });
+
+        if (res.ok) {
+          fetchUsers();
+          setNewName("");
+          setNewEmail("");
+          setNewRole("Pembeli");
+          setNewPassword("");
+        } else {
+          console.error("Gagal menambahkan pengguna");
+        }
+      } catch (error) {
+        console.error("Terjadi kesalahan saat menambahkan pengguna:", (error as Error).message);
+      }
+    } else {
+      console.error("Semua field harus diisi!");
+    }
+  }
+
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 shadow-lg rounded-lg">
       <h1 className="text-4xl font-extrabold text-gray-700 mb-6 text-center">
