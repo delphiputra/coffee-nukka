@@ -24,7 +24,9 @@ export default function UserPage() {
       const res = await fetch("/api/user");
       if (!res.ok) {
         const errorResponse = await res.json().catch(() => null);
-        throw new Error(errorResponse?.error || `HTTP error! status: ${res.status}`);
+        throw new Error(
+          errorResponse?.error || `HTTP error! status: ${res.status}`
+        );
       }
       const data: User[] = await res.json();
       setUsers(data);
@@ -58,7 +60,10 @@ export default function UserPage() {
           console.error("Gagal menambahkan pengguna");
         }
       } catch (error) {
-        console.error("Terjadi kesalahan saat menambahkan pengguna:", (error as Error).message);
+        console.error(
+          "Terjadi kesalahan saat menambahkan pengguna:",
+          (error as Error).message
+        );
       }
     } else {
       console.error("Semua field harus diisi!");
@@ -92,7 +97,10 @@ export default function UserPage() {
           console.error("Gagal mengedit pengguna");
         }
       } catch (error) {
-        console.error("Terjadi kesalahan saat mengedit pengguna:", (error as Error).message);
+        console.error(
+          "Terjadi kesalahan saat mengedit pengguna:",
+          (error as Error).message
+        );
       }
     } else {
       console.error("Nama dan email harus diisi!");
@@ -114,7 +122,10 @@ export default function UserPage() {
         console.error("Gagal menghapus pengguna");
       }
     } catch (error) {
-      console.error("Terjadi kesalahan saat menghapus pengguna:", (error as Error).message);
+      console.error(
+        "Terjadi kesalahan saat menghapus pengguna:",
+        (error as Error).message
+      );
     }
   }
 
@@ -141,68 +152,89 @@ export default function UserPage() {
       {/* Form Tambah/Edit */}
       <div className="mb-8 bg-white shadow rounded-lg p-6">
         <h2 className="text-2xl font-bold text-gray-600 mb-4 text-center">
-          ➕ Tambah/Edit Pengguna
+          {editingId ? "✏️ Edit Pengguna" : "➕ Tambah Pengguna"}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <input
             type="text"
             placeholder="Nama"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
             className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
           <input
             type="email"
             placeholder="Email"
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
             className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
           <input
             type="password"
             placeholder="Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
             className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
-          <select className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300">
+          <select
+            value={newRole}
+            onChange={(e) => setNewRole(e.target.value as "Admin" | "Pembeli")}
+            className="border rounded-lg p-3 shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
             <option value="Admin">Admin</option>
             <option value="Pembeli">Pembeli</option>
           </select>
-          <button className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 transition sm:col-span-2 lg:col-span-1">
-            Tambah
+          <button
+            onClick={editingId ? editUser : addUser}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 transition sm:col-span-2 lg:col-span-1"
+          >
+            {editingId ? "Simpan" : "Tambah"}
           </button>
         </div>
+      </div>
 
-        {/* Tabel Daftar Pengguna */}
-        <div className="overflow-x-auto bg-white shadow rounded-lg p-6">
-          <table className="table-auto w-full border-collapse">
-            <thead>
-              <tr className="bg-blue-100 text-blue-700">
-                <th className="border px-4 py-2 text-left">ID</th>
-                <th className="border px-4 py-2 text-left">Nama</th>
-                <th className="border px-4 py-2 text-left">Email</th>
-                <th className="border px-4 py-2 text-left">Role</th>
-                <th className="border px-4 py-2 text-center">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="hover:bg-gray-100">
-                <td className="border px-4 py-2 text-gray-800">1</td>
-                <td className="border px-4 py-2 text-gray-800">Contoh Nama</td>
-                <td className="border px-4 py-2 text-gray-800">
-                  email@contoh.com
-                </td>
-                <td className="border px-4 py-2 text-gray-800">Admin</td>
+      {/* Tabel Daftar Pengguna */}
+      <div className="overflow-x-auto bg-white shadow rounded-lg p-6">
+        <table className="table-auto w-full border-collapse">
+          <thead>
+            <tr className="bg-blue-100 text-blue-700">
+              <th className="border px-4 py-2 text-left">ID</th>
+              <th className="border px-4 py-2 text-left">Nama</th>
+              <th className="border px-4 py-2 text-left">Email</th>
+              <th className="border px-4 py-2 text-left">Role</th>
+              <th className="border px-4 py-2 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id} className="hover:bg-gray-100">
+                <td className="border px-4 py-2 text-gray-800">{user.id}</td>
+                <td className="border px-4 py-2 text-gray-800">{user.name}</td>
+                <td className="border px-4 py-2 text-gray-800">{user.email}</td>
+                <td className="border px-4 py-2 text-gray-800">{user.role}</td>
                 <td className="border px-4 py-2 text-center">
-                  <button className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition mr-2">
+                  <button
+                    onClick={() => handleEdit(user)}
+                    className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition mr-2"
+                  >
                     Edit
                   </button>
-                  <button className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition">
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition"
+                  >
                     Hapus
                   </button>
                 </td>
               </tr>
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </table>
+        {users.length === 0 && (
           <div className="text-center text-gray-500 mt-4">
             Tidak ada data pengguna.
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
