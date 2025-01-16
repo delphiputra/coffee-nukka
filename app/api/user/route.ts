@@ -32,6 +32,36 @@ export async function GET(req: Request): Promise<Response> {
   }
 }
 
+// Endpoint POST untuk menambahkan pengguna baru
+export async function POST(req: Request): Promise<Response> {
+    try {
+      const { name, email, role, password } = await req.json();
+  
+      // Validasi input
+      if (!name || !email || !role || !password) {
+        return new Response(
+          JSON.stringify({ error: "All fields are required" }),
+          { status: 400 }
+        );
+      }
+  
+      // Hash password sebelum menyimpan ke database
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const newUser = await prisma.user.create({
+        data: { name, email, role, password: hashedPassword },
+      });
+  
+      return new Response(JSON.stringify(newUser), { status: 201 });
+    } catch (error: any) {
+      console.error("Error creating user:", error.message);
+      return new Response(
+        JSON.stringify({ error: "Failed to create user" }),
+        { status: 500 }
+      );
+    }
+  }
+
 
 
 
