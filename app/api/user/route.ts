@@ -93,5 +93,32 @@ export async function PUT(req: Request): Promise<Response> {
     }
   }
 
+// Endpoint DELETE untuk menghapus pengguna
+export async function DELETE(req: Request): Promise<Response> {
+    try {
+      const { id } = await req.json();
+  
+      // Validasi input
+      if (!id) {
+        return new Response(
+          JSON.stringify({ error: "User ID is required" }),
+          { status: 400 }
+        );
+      }
+  
+      const deletedUser = await prisma.user.delete({
+        where: { id },
+      });
+  
+      return new Response(JSON.stringify(deletedUser), { status: 200 });
+    } catch (error: any) {
+      console.error("Error deleting user:", error.message);
+      return new Response(
+        JSON.stringify({ error: "Failed to delete user" }),
+        { status: 500 }
+      );
+    }
+  }
+
 
 
