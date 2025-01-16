@@ -18,5 +18,14 @@ export async function POST(req: Request): Promise<Response> {
         { status: 401 }
       );
     }
+
+    // Verifikasi password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return new Response(
+        JSON.stringify({ error: "Password salah" }),
+        { status: 401 }
+      );
+    }
   }
 }
