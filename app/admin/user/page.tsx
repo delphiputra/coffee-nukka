@@ -1,4 +1,18 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+// Definisikan tipe untuk data pengguna
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: "Admin" | "Pembeli";
+};
+
 export default function UserPage() {
+
+
   return (
     <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 shadow-lg rounded-lg">
       <h1 className="text-4xl font-extrabold text-gray-700 mb-6 text-center">
