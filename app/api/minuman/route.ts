@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 interface MinumanRequestBody {
+  id?: string;
   name: string;
   price: string;
 }
@@ -30,6 +31,37 @@ export async function POST(req: Request): Promise<Response> {
     });
 
     return new Response(JSON.stringify(newMinuman), { status: 201 });
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  }
+}
+
+export async function PUT(req: Request): Promise<Response> {
+  try {
+    const body = await req.json();
+    const { id, name, price } = body;
+
+    const updatedMinuman = await prisma.minuman.update({
+      where: { id: Number(id) },
+      data: { name, price: parseFloat(price) },
+    });
+
+    return new Response(JSON.stringify(updatedMinuman), { status: 200 });
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request): Promise<Response> {
+  try {
+    const body = await req.json();
+    const { id } = body;
+
+    await prisma.minuman.delete({
+      where: { id: Number(id) },
+    });
+
+    return new Response(null, { status: 204 });
   } catch (error: any) {
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
