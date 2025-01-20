@@ -55,6 +55,22 @@ export default function CartPage() {
     calculateTotal(updatedCart);
   };
 
+  // Fungsi untuk mengarahkan ke halaman pemesanan dan reset keranjang
+  const handleCheckout = () => {
+    // Menyimpan status pemesanan (Waiting) ke localStorage
+    const orderDetails = cartItems.map((item) => ({
+      ...item,
+      status: "Waiting",
+    }));
+    localStorage.setItem("order", JSON.stringify(orderDetails)); // Menyimpan data pemesanan
+
+    // Reset keranjang setelah pemesanan
+    localStorage.removeItem("cart");
+
+    // Arahkan ke halaman pemesanan
+    router.push("/pembeli");
+  };
+
   return (
     <div className="p-6 bg-gradient-to-r from-yellow-50 via-white to-yellow-50">
       <main className="flex-grow p-6">
