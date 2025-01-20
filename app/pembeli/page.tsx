@@ -20,6 +20,51 @@ interface Minuman {
   description: string;
 }
 
+export default function CoffeeMenu() {
+
+  const [makanan, setMakanan] = useState<Makanan[]>([]);
+  const [minuman, setMinuman] = useState<Minuman[]>([]);
+  const [cart, setCart] = useState<number>(0); 
+  const router = useRouter(); 
+
+  // Ambil data makanan dari API
+  async function fetchMakanan() {
+    const res = await fetch("/api/makanan");
+    const data = await res.json();
+    setMakanan(data);
+  }
+
+  // Ambil data minuman dari API
+  async function fetchMinuman() {
+    const res = await fetch("/api/minuman");
+    const data = await res.json();
+    setMinuman(data);
+  }
+
+  // Fungsi untuk mengarahkan pengguna ke halaman detail pesanan
+  const handleOrderNow = (item: Makanan | Minuman) => {
+    setCart(cart + 1);
+    
+    // Menyimpan data ke localStorage dengan jumlah item
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const itemIndex = existingCart.findIndex((cartItem: any) => cartItem.id === item.id);
+    if (itemIndex === -1) {
+      existingCart.push({ ...item, quantity: 1 });
+    } else {
+      existingCart[itemIndex].quantity += 1;
+    }
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+
+     // Navigasi ke halaman detail pesanan
+  };
+
+  // Fetch data saat komponen dimuat
+  useEffect(() => {
+    fetchMakanan();
+    fetchMinuman();
+  }, []);
+  
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-yellow-50 via-white to-yellow-50">
       {/* Main Content */}
