@@ -19,6 +19,7 @@ interface Minuman {
 export default function CoffeeMenu() {
   const [makanan, setMakanan] = useState<Makanan[]>([]);
   const [minuman, setMinuman] = useState<Minuman[]>([]);
+  const [cart, setCart] = useState<number>(0);
 
   async function fetchMakanan() {
     const res = await fetch("/api/makanan");
@@ -32,6 +33,10 @@ export default function CoffeeMenu() {
     setMinuman(data);
   }
 
+  function addToCart() {
+    setCart(cart + 1);
+  }
+
   useEffect(() => {
     fetchMakanan();
     fetchMinuman();
@@ -40,11 +45,15 @@ export default function CoffeeMenu() {
   return (
     <div className="p-6">
       <h1 className="text-4xl font-bold">Menu Makanan dan Minuman</h1>
+      <div>
+        <span>Keranjang: {cart} item</span>
+      </div>
       <h2 className="text-3xl mt-6">Makanan 🍽️</h2>
       <ul>
         {makanan.map((item) => (
           <li key={item.id}>
             {item.name} - Rp {item.price}
+            <button onClick={addToCart}>Tambah ke Keranjang</button>
           </li>
         ))}
       </ul>
@@ -53,6 +62,7 @@ export default function CoffeeMenu() {
         {minuman.map((item) => (
           <li key={item.id}>
             {item.name} - Rp {item.price}
+            <button onClick={addToCart}>Tambah ke Keranjang</button>
           </li>
         ))}
       </ul>
