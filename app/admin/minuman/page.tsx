@@ -10,6 +10,8 @@ type Minuman = {
 
 export default function MinumanPage() {
   const [minuman, setMinuman] = useState<Minuman[]>([]);
+  const [newName, setNewName] = useState<string>("");
+  const [newPrice, setNewPrice] = useState<string>("");
 
   async function fetchMinuman() {
     try {
@@ -25,13 +27,51 @@ export default function MinumanPage() {
     }
   }
 
+  async function addMinuman() {
+    if (newName && parseFloat(newPrice) > 0) {
+      try {
+        const res = await fetch("/api/minuman", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: newName, price: parseFloat(newPrice) }),
+        });
+        if (res.ok) {
+          fetchMinuman();
+          setNewName("");
+          setNewPrice("");
+        } else {
+          console.error("Gagal menambahkan minuman");
+        }
+      } catch (error) {
+        console.error("Terjadi kesalahan saat menambahkan minuman:", error);
+      }
+    } else {
+      console.error("Nama dan harga harus valid!");
+    }
+  }
+
   useEffect(() => {
     fetchMinuman();
   }, []);
 
   return (
     <div className="p-6">
-      <h1 className="text-4xl font-bold">🍹 Daftar Minuman</h1>
+      <h1 className="text-4xl font-bold">🍹 Manajemen Minuman</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Nama Minuman"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Harga"
+          value={newPrice}
+          onChange={(e) => setNewPrice(e.target.value)}
+        />
+        <button onClick={addMinuman}>Tambah</button>
+      </div>
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-collapse">
           <thead>
