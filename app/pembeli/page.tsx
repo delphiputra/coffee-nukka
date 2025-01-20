@@ -1,48 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { ShoppingCartIcon } from '@heroicons/react/24/outline'; // Pastikan path yang benar sesuai versi
+import { useRouter } from "next/navigation"; 
 import Link from "next/link";
 
-export default function CoffeeMenu() {
-  const [cart, setCart] = useState(0); // State untuk jumlah item di keranjang
+// Definisi tipe untuk makanan dan minuman
+interface Makanan {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+}
 
-  const coffeeMenu = [
-    {
-      name: "Espresso",
-      description: "Strong and bold coffee shot.",
-      price: "Rp 20.000",
-      image: "/images/espresso.jpg",
-    },
-    {
-      name: "Cappuccino",
-      description: "Espresso with steamed milk and foam.",
-      price: "Rp 25.000",
-      image: "/images/cappuccino.jpg",
-    },
-    {
-      name: "Latte",
-      description: "Creamy milk coffee.",
-      price: "Rp 30.000",
-      image: "/images/latte.jpg",
-    },
-    {
-      name: "Americano",
-      description: "Espresso with hot water.",
-      price: "Rp 18.000",
-      image: "/images/americano.jpg",
-    },
-    {
-      name: "Mocha",
-      description: "Coffee with chocolate and milk.",
-      price: "Rp 35.000",
-      image: "/images/mocha.jpg",
-    },
-  ];
-
-  const addToCart = () => {
-    setCart(cart + 1);
-  };
+interface Minuman {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+}
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-yellow-50 via-white to-yellow-50">
