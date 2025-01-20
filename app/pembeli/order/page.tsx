@@ -21,6 +21,19 @@ export default function CartPage() {
     setTotal(totalPrice);
   };
 
+  // Fungsi untuk menambah jumlah item
+  const increaseQuantity = (id: number) => {
+    const updatedCart = cartItems.map((item) => {
+      if (item.id === id) {
+        item.quantity += 1;
+      }
+      return item;
+    });
+    setCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    calculateTotal(updatedCart);
+  };
+
   return (
     <div className="p-6 bg-gradient-to-r from-yellow-50 via-white to-yellow-50">
       <main className="flex-grow p-6">
