@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 interface Makanan {
   id: number;
@@ -33,8 +35,19 @@ export default function CoffeeMenu() {
     setMinuman(data);
   }
 
-  function addToCart() {
+  function addToCart(item: Makanan | Minuman) {
     setCart(cart + 1);
+
+    const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const index = currentCart.findIndex((cartItem: any) => cartItem.id === item.id);
+
+    if (index === -1) {
+      currentCart.push({ ...item, quantity: 1 });
+    } else {
+      currentCart[index].quantity += 1;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(currentCart));
   }
 
   useEffect(() => {
@@ -44,16 +57,21 @@ export default function CoffeeMenu() {
 
   return (
     <div className="p-6">
-      <h1 className="text-4xl font-bold">Menu Makanan dan Minuman</h1>
-      <div>
-        <span>Keranjang: {cart} item</span>
+      <div className="flex justify-between">
+        <h1 className="text-4xl font-bold">Menu Makanan dan Minuman</h1>
+        <Link href="/keranjang">
+          <button>
+            <ShoppingCartIcon className="w-6 h-6" />
+            <span>{cart}</span>
+          </button>
+        </Link>
       </div>
       <h2 className="text-3xl mt-6">Makanan 🍽️</h2>
       <ul>
         {makanan.map((item) => (
           <li key={item.id}>
             {item.name} - Rp {item.price}
-            <button onClick={addToCart}>Tambah ke Keranjang</button>
+            <button onClick={() => addToCart(item)}>Tambah ke Keranjang</button>
           </li>
         ))}
       </ul>
@@ -62,7 +80,7 @@ export default function CoffeeMenu() {
         {minuman.map((item) => (
           <li key={item.id}>
             {item.name} - Rp {item.price}
-            <button onClick={addToCart}>Tambah ke Keranjang</button>
+            <button onClick={() => addToCart(item)}>Tambah ke Keranjang</button>
           </li>
         ))}
       </ul>
