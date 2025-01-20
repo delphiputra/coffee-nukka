@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 
 export default function PemesananPage() {
-  const [orderDetails, setOrderDetails] = useState<{ items: any[]; buyerName?: string }>({
+  const [orderDetails, setOrderDetails] = useState<{
+    items: any[];
+    buyerName?: string;
+  }>({
     items: [],
   });
 
@@ -22,7 +25,9 @@ export default function PemesananPage() {
 
   const handleOrderCompletion = (itemId: string) => {
     if (orderDetails) {
-      const updatedItems = orderDetails.items.filter((item) => item.id !== itemId);
+      const updatedItems = orderDetails.items.filter(
+        (item) => item.id !== itemId
+      );
       const updatedOrder = { ...orderDetails, items: updatedItems };
       setOrderDetails(updatedOrder);
       localStorage.setItem("order", JSON.stringify(updatedOrder));
@@ -31,7 +36,9 @@ export default function PemesananPage() {
 
   const handleNewOrder = (newOrder: any) => {
     // Cek apakah item dengan ID yang sama sudah ada
-    const existingItem = orderDetails.items.find((item) => item.id === newOrder.id);
+    const existingItem = orderDetails.items.find(
+      (item) => item.id === newOrder.id
+    );
     let updatedItems;
 
     if (existingItem) {
@@ -83,10 +90,18 @@ export default function PemesananPage() {
                 <tbody>
                   {orderDetails.items.map((item) => (
                     <tr key={item.id} className="hover:bg-gray-100">
-                      <td className="px-4 py-2 border text-black">{item.name}</td>
-                      <td className="px-4 py-2 border text-black">Rp {item.price}</td>
-                      <td className="px-4 py-2 border text-black">{item.quantity}</td>
-                      <td className="px-4 py-2 border text-black">Rp {item.price * item.quantity}</td>
+                      <td className="px-4 py-2 border text-black">
+                        {item.name}
+                      </td>
+                      <td className="px-4 py-2 border text-black">
+                        Rp {item.price}
+                      </td>
+                      <td className="px-4 py-2 border text-black">
+                        {item.quantity}
+                      </td>
+                      <td className="px-4 py-2 border text-black">
+                        Rp {item.price * item.quantity}
+                      </td>
                       <td className="px-4 py-2 border text-center text-black">
                         <button
                           onClick={() => handleOrderCompletion(item.id)}

@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import router from "next/router";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<any[]>([]); // Menyimpan data keranjang
   const [total, setTotal] = useState(0); // Menyimpan total harga
+  const router = useRouter();
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -90,9 +90,14 @@ export default function CartPage() {
               <div>
                 <ul>
                   {cartItems.map((item) => (
-                    <li key={item.id} className="flex justify-between items-center mb-4">
+                    <li
+                      key={item.id}
+                      className="flex justify-between items-center mb-4"
+                    >
                       <div>
-                        <h3 className="text-lg font-extrabold text-gray-800">{item.name}</h3>
+                        <h3 className="text-lg font-extrabold text-gray-800">
+                          {item.name}
+                        </h3>
                         <p className="text-gray-700 font-bold">
                           Rp {item.price} x {item.quantity}
                         </p>
