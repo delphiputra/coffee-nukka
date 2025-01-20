@@ -47,6 +47,14 @@ export default function CartPage() {
     calculateTotal(updatedCart);
   };
 
+  // Fungsi untuk menghapus item dari keranjang
+  const removeItem = (id: number) => {
+    const updatedCart = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    calculateTotal(updatedCart);
+  };
+
   return (
     <div className="p-6 bg-gradient-to-r from-yellow-50 via-white to-yellow-50">
       <main className="flex-grow p-6">
